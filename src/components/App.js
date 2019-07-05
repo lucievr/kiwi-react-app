@@ -97,6 +97,7 @@ class App extends React.Component {
                     price={flight.price}
                     dTime={depTime}
                     aTime={arrTime}
+                    transfers={flight.transfers}
                 />
             );
         });
