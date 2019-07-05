@@ -27,3 +27,13 @@ div.App {
 h1 {
   margin-top: 0;
 }
+
+a {
+  list-style: none;
+}
+
+div.dropdown-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

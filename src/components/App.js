@@ -74,13 +74,28 @@ class App extends React.Component {
     });
 
     const destinationCityArray = Object.keys(this.state.destinations);
-    console.log(destinationCityArray);
     const destinationCodeArray = Object.values(this.state.destinations);
-    console.log(destinationCodeArray);
 
-      const menu = (
+    const originsCityArray = Object.keys(this.state.origins);
+    console.log(originsCityArray);
+    const originsCodeArray = Object.values(this.state.origins);
+
+
+      const menu1 = (
         <Menu>
         {destinationCityArray.map((city, index) => 
+          <Menu.Item key={`${city}-${index}`}>
+            <a target="_blank" rel="noopener noreferrer" href="#">
+              {city}
+            </a>
+          </Menu.Item>
+        )
+        }</Menu>
+      );
+
+      const menu2 = (
+        <Menu>
+        {originsCityArray.map((city, index) => 
           <Menu.Item key={`${city}-${index}`}>
             <a target="_blank" rel="noopener noreferrer" href="#">
               {city}
@@ -97,13 +112,21 @@ class App extends React.Component {
             <h1>Kiwi Flights</h1>
             {this.state.isLoading && <img src={Gif} alt="spinner" />}
           </div>
-
-          <Dropdown overlay={menu}>
+        <div className="dropdown-wrapper">
+          <Dropdown overlay={menu1} trigger={['click']}>
             <a className="ant-dropdown-link" href="#">
               Destinations <Icon type="down" />
             </a>
           </Dropdown>
-          <div>{flightComponents}</div>
+          <Dropdown overlay={menu2} trigger={['click']}>
+            <a className="ant-dropdown-link" href="#">
+              Origin <Icon type="down" />
+            </a>
+          </Dropdown>
+          </div>
+          <div style={{
+              marginTop: `200px`
+          }}>{flightComponents}</div>
         </div>
       </div>
     );
