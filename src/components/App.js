@@ -50,7 +50,7 @@ class App extends React.Component {
                         fly_to: flyTo,
                         date_from: '06/07/2019',
                         date_to: '13/07/2019',
-                        limit: 15,
+                        limit: 20,
                         direct_flights: isDirect
                     }
                 }
@@ -134,7 +134,7 @@ class App extends React.Component {
                         <select id="origin" onChange={this.handleOriginSelect}>
                             {originArray}
                         </select>{' '}
-                        <br />
+                       
                         <label htmlFor="destination">To</label>
                         <select
                             id="destination"
