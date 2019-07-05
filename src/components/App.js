@@ -10,7 +10,15 @@ class App extends React.Component {
         super(props);
         this.state = {
             flights: [],
-            isLoading: true
+            isLoading: true,
+            destinations: [
+                'Valencia',
+                'Barcelona',
+                'Milano',
+                'Madrid',
+                'Athens'
+            ],
+            origins: ['Prague', 'Berlin', 'Warsaw', 'Pardubice']
         };
     }
 
@@ -67,7 +75,7 @@ class App extends React.Component {
                 <div className="app-wrapper">
                     <div>
                         <h1>Kiwi Flights</h1>
-                        <Dropmenu />
+                        <Dropmenu destination="Valencia" />
                         {this.state.isLoading && (
                             <img src={Gif} alt="spinner" />
                         )}
