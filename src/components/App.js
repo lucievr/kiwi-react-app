@@ -4,8 +4,6 @@ import Flight from "./Flight";
 import { DateTime } from "luxon";
 import Gif from "../img/spinner.gif";
 
-import { Menu, Dropdown, Icon } from "antd";
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -24,16 +22,19 @@ class App extends React.Component {
         Berlin: "SXF",
         Warsaw: "WMI",
         Pardubice: "PED"
-      }
+      },
+      flyFrom: '',
+      flyTo: ''
     };
   }
 
   fetchFlights = async () => {
+    const { flyFrom, flyTo } = this.state
     try {
       let response = await axios.get("https://api.skypicker.com/flights", {
         params: {
-          fly_from: "PRG",
-          fly_to: "VLC",
+          fly_from: flyFrom,
+          fly_to: flyTo,
           date_from: "06/07/2019",
           date_to: "13/07/2019",
           limit: 15
@@ -50,6 +51,14 @@ class App extends React.Component {
   componentDidMount() {
     this.fetchFlights();
   }
+
+  handleOriginSelect = (e) => {
+      this.setState({ flyFrom: e.target.value })
+  }
+
+  handleDestSelect = (e) => {
+    this.setState({ flyTo: e.target.value })
+}
 
   render() {
     const flightComponents = this.state.flights.map((flight, index) => {
@@ -74,59 +83,43 @@ class App extends React.Component {
     });
 
     const destinationCityArray = Object.keys(this.state.destinations);
-    const destinationCodeArray = Object.values(this.state.destinations);
-
     const originsCityArray = Object.keys(this.state.origins);
-    console.log(originsCityArray);
-    const originsCodeArray = Object.values(this.state.origins);
 
+    const destArray = destinationCityArray.map((city, index) => (
+      <option value={this.state.destinations[city]} key={`${city}-${index}`}>
+        {city}
+      </option>
+    ));
 
-      const menu1 = (
-        <Menu>
-        {destinationCityArray.map((city, index) => 
-          <Menu.Item key={`${city}-${index}`}>
-            <a target="_blank" rel="noopener noreferrer" href="#">
-              {city}
-            </a>
-          </Menu.Item>
-        )
-        }</Menu>
-      );
-
-      const menu2 = (
-        <Menu>
-        {originsCityArray.map((city, index) => 
-          <Menu.Item key={`${city}-${index}`}>
-            <a target="_blank" rel="noopener noreferrer" href="#">
-              {city}
-            </a>
-          </Menu.Item>
-        )
-        }</Menu>
-      );
+    const originArray = originsCityArray.map((city, index) => (
+      <option value={this.state.origins[city]} key={`${city}-${index}`}>
+        {city}
+      </option>
+    ));
 
     return (
       <div className="App">
         <div className="app-wrapper">
           <div>
-            <h1>Kiwi Flights</h1>
+            <h1>Search for flights</h1>
             {this.state.isLoading && <img src={Gif} alt="spinner" />}
           </div>
-        <div className="dropdown-wrapper">
-          <Dropdown overlay={menu1} trigger={['click']}>
-            <a className="ant-dropdown-link" href="#">
-              Destinations <Icon type="down" />
-            </a>
-          </Dropdown>
-          <Dropdown overlay={menu2} trigger={['click']}>
-            <a className="ant-dropdown-link" href="#">
-              Origin <Icon type="down" />
-            </a>
-          </Dropdown>
-          </div>
-          <div style={{
+          <form>
+            <label htmlFor="origin">From</label> <br />
+            <select id="origin" onChange={this.handleOriginSelect}>
+            {originArray}
+            </select> <br />
+
+            <label htmlFor="destination">To</label> <br />
+            <select id="destination" onChange={this.handleDestSelect}>{destArray}</select>
+          </form>
+          <div
+            style={{
               marginTop: `200px`
-          }}>{flightComponents}</div>
+            }}
+          >
+            {flightComponents}
+          </div>
         </div>
       </div>
     );
