@@ -5,7 +5,7 @@ const menu = (
     <Menu>
         <Menu.Item>
             <a target="_blank" rel="noopener noreferrer" href="#">
-                Valencia
+                {props.destination}
             </a>
         </Menu.Item>
         <Menu.Item>
