@@ -30,6 +30,7 @@ class App extends React.Component {
 
   fetchFlights = async () => {
     const { flyFrom, flyTo } = this.state
+    this.setState({isLoading: true})
     try {
       let response = await axios.get("https://api.skypicker.com/flights", {
         params: {
@@ -40,9 +41,8 @@ class App extends React.Component {
           limit: 15
         }
       });
-      let { data } = response.data;
-      await this.setState({ flights: data });
-      this.setState({ isLoading: false });
+      console.log(response.data)
+      this.setState({ flights: response.data.data, isLoading: false });
     } catch (error) {
       console.error(error);
     }
@@ -58,6 +58,11 @@ class App extends React.Component {
 
   handleDestSelect = (e) => {
     this.setState({ flyTo: e.target.value })
+}
+
+handleSubmit = (e) => {
+    e.preventDefault();
+    this.fetchFlights()
 }
 
   render() {
@@ -104,7 +109,7 @@ class App extends React.Component {
             <h1>Search for flights</h1>
             {this.state.isLoading && <img src={Gif} alt="spinner" />}
           </div>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <label htmlFor="origin">From</label> <br />
             <select id="origin" onChange={this.handleOriginSelect}>
             {originArray}
@@ -112,6 +117,7 @@ class App extends React.Component {
 
             <label htmlFor="destination">To</label> <br />
             <select id="destination" onChange={this.handleDestSelect}>{destArray}</select>
+            <button onClick={this.fetchFlights}>Search</button>
           </form>
           <div
             style={{
