@@ -2,17 +2,17 @@ import React from "react";
 
 const Flight = props => {
   return (
-    <>
-      <h3>
+    <div className="flight-wrapper">
+      <span>
         {props.cityFrom} ({props.flyFrom})
-      </h3>
-      <h3>
+      </span>
+      <span>
         {props.cityTo} ({props.flyTo})
-      </h3>
-      <h4>€{props.price}</h4>
-      <h4>{props.dTime}</h4>
-      <h4>{props.aTime}</h4>
-    </>
+      </span>
+      <span>€{props.price}</span>
+      <span>{props.dTime}</span>
+      <span>{props.aTime}</span>
+    </div>
   );
 };
 

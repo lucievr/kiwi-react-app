@@ -129,12 +129,12 @@ class App extends React.Component {
                         )}
                     </div>
                     <form onSubmit={this.handleSubmit}>
-                        <label htmlFor="origin">From</label> <br />
+                        <label htmlFor="origin">From</label>
                         <select id="origin" onChange={this.handleOriginSelect}>
                             {originArray}
                         </select>{' '}
                         <br />
-                        <label htmlFor="destination">To</label> <br />
+                        <label htmlFor="destination">To</label>
                         <select
                             id="destination"
                             onChange={this.handleDestSelect}
@@ -156,7 +156,7 @@ class App extends React.Component {
                     </form>
                     <div
                         style={{
-                            marginTop: `200px`
+                            marginTop: `100px`
                         }}
                     >
                         {flightComponents}
